@@ -1,6 +1,6 @@
 # gamebarin
 
-A new Flutter project.
+this is game inspired from gartic.io but with different concept, this game make by node js and flutter(dart).
 
 ## Getting Started
 
