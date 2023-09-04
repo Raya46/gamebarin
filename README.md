@@ -1,6 +1,6 @@
 # gamebarin
 
-this is game inspired from gartic.io but with different concept, this game make by node js and flutter(dart).
+this is game inspired from gartic.io but with different concept (the fastest one wins), this game make by node js and flutter(dart).
 
 ## Getting Started
 
