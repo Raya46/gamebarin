@@ -41,7 +41,13 @@ class _JoinRoomPageState extends State<JoinRoomPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Join Room"),
+            Text(
+              "Join Room",
+              style: GoogleFonts.blackOpsOne(fontSize: 20),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
+            ),
             TextFormField(
               controller: _nameController,
               decoration: const InputDecoration(
@@ -69,12 +75,26 @@ class _JoinRoomPageState extends State<JoinRoomPage> {
                 ),
               ),
             ),
-            ElevatedButton(
-                child: Text(
-                  "Join",
-                  style: GoogleFonts.blackOpsOne(fontSize: 30),
-                ),
-                onPressed: joinRoom),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    child: Text(
+                      "Join",
+                      style: GoogleFonts.blackOpsOne(fontSize: 30),
+                    ),
+                    onPressed: joinRoom),
+                ElevatedButton(
+                    child: Text(
+                      "Cancel",
+                      style: GoogleFonts.blackOpsOne(fontSize: 30),
+                    ),
+                    onPressed: Navigator.of(context).pop),
+              ],
+            )
           ],
         ),
       ),

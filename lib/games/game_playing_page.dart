@@ -79,7 +79,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
   }
 
   void connect() {
-    _socket = IO.io('http://192.168.1.11:3000/', <String, dynamic>{
+    _socket = IO.io('http://192.168.56.1:3000/', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false
     });
@@ -155,7 +155,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
           'notCorrectGame',
           (data) => Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
-                builder: (context) => HomePage(),
+                builder: (context) => const HomePage(),
               ),
               (route) => false));
 
@@ -202,6 +202,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
               maxPoints = int.parse(scoreboard[i]['points']);
             }
           }
+          print(roomPlayers);
           setState(() {
             _timer.cancel();
             isShowFinalLeaderboard = true;
@@ -304,7 +305,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height * 0.55,
                               child: GestureDetector(
@@ -369,18 +370,6 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                                     color: selectedColor,
                                   ),
                                 ),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      scoreboard.clear();
-                                      setState(() {
-                                        // scoreboard.add({
-                                        //   'username': "well",
-                                        //   'points': 40.toString(),
-                                        // });
-                                      });
-                                      print(scoreboard);
-                                    },
-                                    child: Text('tes')),
                                 Expanded(
                                   child: Slider(
                                     min: 1.0,
@@ -411,7 +400,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                                 ),
                               ],
                             ),
-                            Container(
+                            SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.25,
                                 child: ListView.builder(
@@ -484,10 +473,11 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                             child: IconButton(
                                 onPressed: () =>
                                     scaffoldKey.currentState!.openDrawer(),
-                                icon: Icon(Icons.menu)))
+                                icon: const Icon(Icons.menu)))
                       ],
                     )
-                  : FinalLeaderboard(scoreboard, winner)
+                  : FinalLeaderboard(scoreboard, winner, _socket, dataOfRoom,
+                      widget.data, isShowFinalLeaderboard, widget.screenFrom)
               : GameWaitingScreen(
                   occupancy: dataOfRoom['occupancy'],
                   numberOfPlayers: dataOfRoom['players'].length,

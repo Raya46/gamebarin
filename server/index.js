@@ -136,6 +136,36 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('reset-game', async ({name}) => {
+        try {
+          const room = await Room.findOne({name});
+          if (!room) {
+            return; // Room tidak ditemukan, tidak ada tindakan yang diambil
+          }
+    
+          // Reset skor pemain
+          room.currentRound = 1
+          console.log(room.currentRound)
+    
+          io.to(name).emit('reset-game', room.currentRound); // Update skor ke semua pemain di room
+        } catch (error) {
+          console.error('Error resetting game:', error);
+        }
+      });
+
+      socket.on('delete-document', async ({ collectionName, documentId }) => {
+        try {
+          // Hapus dokumen menggunakan Mongoose atau MongoDB Driver
+          await Room.findOneAndDelete({ _id: documentId });
+    
+          // Beri tahu klien bahwa dokumen telah dihapus
+          socket.emit('document-deleted', { collectionName, documentId });
+        } catch (error) {
+          console.error('Gagal menghapus dokumen:', error);
+        }
+        console.log('berhasil menghapus dokumen')
+      });
+
     socket.on('paint', ({details, roomName}) => {
         io.to(roomName).emit('points', {details: details})
     })

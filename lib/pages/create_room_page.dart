@@ -124,12 +124,23 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
             ),
-            ElevatedButton(
-                child: Text(
-                  "Create",
-                  style: GoogleFonts.blackOpsOne(fontSize: 30),
-                ),
-                onPressed: createRoom),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    child: Text(
+                      "Create",
+                      style: GoogleFonts.blackOpsOne(fontSize: 30),
+                    ),
+                    onPressed: createRoom),
+                ElevatedButton(
+                    child: Text(
+                      "Cancel",
+                      style: GoogleFonts.blackOpsOne(fontSize: 30),
+                    ),
+                    onPressed: Navigator.of(context).pop),
+              ],
+            ),
           ],
         ),
       ),
