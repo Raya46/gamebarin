@@ -36,67 +36,106 @@ class _JoinRoomPageState extends State<JoinRoomPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Join Room",
-              style: GoogleFonts.blackOpsOne(fontSize: 20),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/bg-pattern.jpg', // Ganti dengan path gambar latar belakang Anda
+              fit: BoxFit.cover,
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
-            ),
-            TextFormField(
-              controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: "Player Name",
-                hintText: "Username",
-                border: OutlineInputBorder(),
-                suffixIcon: Icon(
-                  Icons.person,
-                  size: 24.0,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
-            ),
-            TextFormField(
-              controller: _roomNameController,
-              decoration: const InputDecoration(
-                labelText: "Room Name",
-                hintText: "Room",
-                border: OutlineInputBorder(),
-                suffixIcon: Icon(
-                  Icons.meeting_room,
-                  size: 24.0,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
-            ),
-            Row(
+          ),
+          // Latar belakang warna biru dengan opasitas
+          Container(
+            color: Colors.blue.withOpacity(
+                0.5), // Ganti dengan warna dan opasitas yang diinginkan
+          ),
+          Container(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                    child: Text(
-                      "Join",
-                      style: GoogleFonts.blackOpsOne(fontSize: 30),
+                Text(
+                  "Join Room",
+                  style: GoogleFonts.blackOpsOne(fontSize: 40),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                TextFormField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    labelText: "Player Name",
+                    filled: true,
+                    fillColor: Colors.white,
+                    labelStyle: GoogleFonts.blackOpsOne(),
+                    border: OutlineInputBorder(),
+                    suffixIcon: Icon(
+                      Icons.person,
+                      size: 24.0,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.05,
+                ),
+                TextFormField(
+                  controller: _roomNameController,
+                  decoration: InputDecoration(
+                    labelText: "Room Name",
+                    filled: true,
+                    fillColor: Colors.white,
+                    labelStyle: GoogleFonts.blackOpsOne(),
+                    border: OutlineInputBorder(),
+                    suffixIcon: Icon(
+                      Icons.meeting_room,
+                      size: 24.0,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.05,
+                ),
+                ElevatedButton.icon(
+                    icon: const Icon(Icons.door_sliding, color: Colors.black),
+                    label: Padding(
+                      padding: const EdgeInsets.only(left: 15, right: 15),
+                      child: Text(
+                        "Join",
+                        style: GoogleFonts.blackOpsOne(
+                            fontSize: 30, color: Colors.black),
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue[300],
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(64.0),
+                          side: const BorderSide(width: 2)),
                     ),
                     onPressed: joinRoom),
-                ElevatedButton(
-                    child: Text(
-                      "Cancel",
-                      style: GoogleFonts.blackOpsOne(fontSize: 30),
-                    ),
-                    onPressed: Navigator.of(context).pop),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.cancel, color: Colors.black),
+                  label: Text(
+                    "Cancel",
+                    style: GoogleFonts.blackOpsOne(
+                        fontSize: 30, color: Colors.black),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.yellow[300],
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(64.0),
+                        side: const BorderSide(width: 2)),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
               ],
-            )
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }

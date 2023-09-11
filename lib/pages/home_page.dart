@@ -49,23 +49,27 @@ class _HomePageState extends State<HomePage> {
 
                 // Image.asset('assets/logogamebarin.png', fit: BoxFit.cover),
                 Card(
+                  color: Colors.white,
                   margin: const EdgeInsets.only(left: 20, right: 20),
                   elevation: 5,
                   child: Column(children: [
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.02,
                     ),
-                    Card(
-                      shape: const RoundedRectangleBorder(
-                        side: BorderSide(width: 2),
-                      ),
-                      color: Colors.blue[100],
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Draw, Guess, Win",
-                          style: GoogleFonts.blackOpsOne(
-                              color: Colors.purple[800]),
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Card(
+                        shape: const RoundedRectangleBorder(
+                          side: BorderSide(width: 2),
+                        ),
+                        color: Colors.blue[100],
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Draw, Guess, Win",
+                            style: GoogleFonts.blackOpsOne(
+                                color: Colors.purple[800], fontSize: 20),
+                          ),
                         ),
                       ),
                     ),
@@ -81,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                           label: Text(
                             "Create",
                             style: GoogleFonts.blackOpsOne(
-                                fontSize: 20, color: Colors.black),
+                                fontSize: 30, color: Colors.black),
                           ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue[300],
@@ -105,10 +109,13 @@ class _HomePageState extends State<HomePage> {
                             Icons.door_sliding,
                             color: Colors.black,
                           ),
-                          label: Text(
-                            "Join",
-                            style: GoogleFonts.blackOpsOne(
-                                fontSize: 20, color: Colors.black),
+                          label: Padding(
+                            padding: const EdgeInsets.only(left: 15, right: 15),
+                            child: Text(
+                              "Join",
+                              style: GoogleFonts.blackOpsOne(
+                                  fontSize: 30, color: Colors.black),
+                            ),
                           ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.yellow[300],
@@ -127,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.02,
+                      height: MediaQuery.of(context).size.height * 0.05,
                     ),
                   ]),
                 ),

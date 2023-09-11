@@ -14,24 +14,35 @@ class SplashScreen extends StatelessWidget {
       );
     });
     return Scaffold(
-      backgroundColor: Colors.blue[500],
-      body: Center(
-        child: Card(
-          color: Colors.blueGrey,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.draw,
-                size: 46.0,
-              ),
-              Text(
-                "Gamebarin",
-                style: GoogleFonts.blackOpsOne(fontSize: 40),
-              ),
-            ],
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/bg-pattern.jpg', // Ganti dengan path gambar latar belakang Anda
+              fit: BoxFit.cover,
+            ),
           ),
-        ), // Ganti dengan path gambar Anda
+          // Latar belakang warna biru dengan opasitas
+          Container(
+            color: Colors.blue.withOpacity(
+                0.5), // Ganti dengan warna dan opasitas yang diinginkan
+          ),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.draw,
+                  size: 46.0,
+                ),
+                Text(
+                  "Gamebarin",
+                  style: GoogleFonts.blackOpsOne(fontSize: 40),
+                ),
+              ],
+            ), // Ganti dengan path gambar Anda
+          ),
+        ],
       ),
     );
   }

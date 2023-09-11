@@ -301,6 +301,17 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
               ? !isShowFinalLeaderboard
                   ? Stack(
                       children: [
+                        Positioned.fill(
+                          child: Image.asset(
+                            'assets/bg-pattern.jpg', // Ganti dengan path gambar latar belakang Anda
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        // Latar belakang warna biru dengan opasitas
+                        Container(
+                          color: Colors.blue.withOpacity(
+                              0.5), // Ganti dengan warna dan opasitas yang diinginkan
+                        ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -410,19 +421,33 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                                     itemBuilder: (context, index) {
                                       var msg = messages[index].values;
                                       print(msg);
-                                      return ListTile(
-                                        title: Text(
-                                          msg.elementAt(0),
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 19,
-                                              fontWeight: FontWeight.bold),
+                                      return Card(
+                                        shape: const RoundedRectangleBorder(
+                                          side: BorderSide(width: 2),
                                         ),
-                                        subtitle: Text(
-                                          msg.elementAt(1),
-                                          style: const TextStyle(
-                                              color: Colors.grey, fontSize: 16),
-                                        ),
+                                        child: ListTile(
+                                            title: Text(
+                                              msg.elementAt(0),
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 19,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            subtitle: msg
+                                                    .elementAt(1)
+                                                    .contains('guessed')
+                                                ? Text(
+                                                    msg.elementAt(1),
+                                                    style: const TextStyle(
+                                                        color: Colors.green,
+                                                        fontSize: 16),
+                                                  )
+                                                : Text(
+                                                    '${msg.elementAt(1)} ❌',
+                                                    style: const TextStyle(
+                                                        color: Colors.red,
+                                                        fontSize: 16),
+                                                  )),
                                       );
                                     })),
                           ],
@@ -476,7 +501,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                                 icon: const Icon(Icons.menu)))
                       ],
                     )
-                  : FinalLeaderboard(scoreboard, winner, _socket, dataOfRoom,
+                  : FinalLeaderboard(scoreboard, winner, dataOfRoom,
                       widget.data, isShowFinalLeaderboard, widget.screenFrom)
               : GameWaitingScreen(
                   occupancy: dataOfRoom['occupancy'],
@@ -491,15 +516,32 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
         margin: const EdgeInsets.only(
           bottom: 30.0,
         ),
-        child: FloatingActionButton(
-          onPressed: () {},
-          elevation: 7,
-          backgroundColor: Colors.white,
-          child: Text(
-            "$_start",
-            style: const TextStyle(color: Colors.black, fontSize: 22),
-          ),
-        ),
+        child: isShowFinalLeaderboard
+            ? FloatingActionButton(
+                onPressed: () {
+                  scoreboard.clear();
+                  _socket.emit("delete-document", {
+                    'collectionName': 'rooms',
+                    'documentId': dataOfRoom['_id']
+                  });
+                  print(dataOfRoom['_id']);
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomePage()));
+                },
+                elevation: 7,
+                backgroundColor: Colors.white,
+                child: Icon(Icons.close))
+            : FloatingActionButton(
+                onPressed: () {},
+                elevation: 7,
+                backgroundColor: Colors.white,
+                child: Text(
+                  "$_start",
+                  style: const TextStyle(color: Colors.black, fontSize: 22),
+                ),
+              ),
       ),
     );
   }
