@@ -153,13 +153,13 @@ io.on('connection', (socket) => {
         }
       });
 
-      socket.on('delete-document', async ({ collectionName, documentId }) => {
+      socket.on('delete-document', async ({ collectionName, documentName }) => {
         try {
           // Hapus dokumen menggunakan Mongoose atau MongoDB Driver
-          await Room.findOneAndDelete({ _id: documentId });
+          await Room.findOneAndDelete({ name: documentName });
     
           // Beri tahu klien bahwa dokumen telah dihapus
-          socket.emit('document-deleted', { collectionName, documentId });
+          socket.emit('document-deleted', { collectionName, documentName });
         } catch (error) {
           console.error('Gagal menghapus dokumen:', error);
         }

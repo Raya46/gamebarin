@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gamebarin/pages/create_room_page.dart';
-import 'package:gamebarin/pages/home_page.dart';
-import 'package:gamebarin/pages/join_room_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class FinalLeaderboard extends StatefulWidget {
   final scoreboard;

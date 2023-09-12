@@ -67,8 +67,7 @@ class _HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             "Draw, Guess, Win",
-                            style: GoogleFonts.blackOpsOne(
-                                color: Colors.purple[800], fontSize: 20),
+                            style: GoogleFonts.blackOpsOne(fontSize: 20),
                           ),
                         ),
                       ),

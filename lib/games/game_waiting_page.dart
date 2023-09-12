@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gamebarin/pages/home_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class GameWaitingScreen extends StatefulWidget {
   final int occupancy;
@@ -21,6 +23,22 @@ class GameWaitingScreen extends StatefulWidget {
 }
 
 class _GameWaitingScreenState extends State<GameWaitingScreen> {
+  late IO.Socket _socket;
+
+  @override
+  void initState() {
+    connect();
+    super.initState();
+  }
+
+  void connect() {
+    _socket = IO.io('http://192.168.56.1:3000/', <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false
+    });
+    _socket.connect();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -42,19 +60,50 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
-              Card(
-                shape: const RoundedRectangleBorder(
-                  side: BorderSide(width: 2),
-                ),
-                color: Colors.blue[100],
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Players",
-                    style: GoogleFonts.blackOpsOne(
-                        fontSize: 20, letterSpacing: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      _socket.emit("delete-document", {
+                        'collectionName': 'rooms',
+                        'documentName': widget.lobbyName
+                      });
+                      print(widget.lobbyName);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()));
+                    },
+                    child: Card(
+                        shape: const RoundedRectangleBorder(
+                          side: BorderSide(width: 2),
+                        ),
+                        color: Colors.blue[100],
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Icon(
+                            Icons.cancel,
+                            color: Colors.red,
+                            size: 40,
+                          ),
+                        )),
                   ),
-                ),
+                  Card(
+                    shape: const RoundedRectangleBorder(
+                      side: BorderSide(width: 2),
+                    ),
+                    color: Colors.blue[100],
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Players",
+                        style: GoogleFonts.blackOpsOne(
+                            fontSize: 20, letterSpacing: 24),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
@@ -85,7 +134,7 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
               ),
               Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: ListView.builder(
                     primary: true,
                     shrinkWrap: true,

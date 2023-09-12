@@ -435,7 +435,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                                             ),
                                             subtitle: msg
                                                     .elementAt(1)
-                                                    .contains('guessed')
+                                                    .contains('Guessed it!')
                                                 ? Text(
                                                     msg.elementAt(1),
                                                     style: const TextStyle(
@@ -522,9 +522,9 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                   scoreboard.clear();
                   _socket.emit("delete-document", {
                     'collectionName': 'rooms',
-                    'documentId': dataOfRoom['_id']
+                    'documentName': dataOfRoom['name']
                   });
-                  print(dataOfRoom['_id']);
+                  print(dataOfRoom['name']);
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
