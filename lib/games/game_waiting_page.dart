@@ -31,8 +31,8 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
     super.initState();
   }
 
-  void connect() {
-    _socket = IO.io('http://192.168.56.1:3000/', <String, dynamic>{
+  connect() {
+    _socket = IO.io('http://10.10.18.100:3000/', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false
     });
@@ -64,7 +64,8 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   InkWell(
-                    onTap: () {
+                    onTap: () async {
+                      await connect();
                       _socket.emit("delete-document", {
                         'collectionName': 'rooms',
                         'documentName': widget.lobbyName

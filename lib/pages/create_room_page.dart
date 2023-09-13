@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamebarin/games/game_playing_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class CreateRoomPage extends StatefulWidget {
   const CreateRoomPage({Key? key}) : super(key: key);
@@ -16,26 +17,43 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
   final TextEditingController _roomNameController = TextEditingController();
   late String? _maxRoundsValue;
   late String? _roomSizeValue;
+  late IO.Socket _socket;
 
-  void createRoom() {
-    // if (_nameController.text.isEmpty &&
-    //     _roomNameController.text.isEmpty &&
-    //     _maxRoundsValue != null &&
-    //     _roomSizeValue != null) {
-    Map<String, String> data = {
-      "nickname": _nameController.text,
-      "name": _roomNameController.text,
-      "occupancy": _maxRoundsValue!,
-      "maxRounds": _roomSizeValue!
-    };
-    print(data);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              GamePlayingPage(data: data, screenFrom: "createRoom")),
-    );
-    // }
+  connect() {
+    _socket = IO.io('http://10.10.18.100:3000/', <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false
+    });
+    _socket.connect();
+  }
+
+  void createRoom() async {
+    try {
+      await connect();
+      if (_nameController.text.isNotEmpty &&
+          _roomNameController.text.isNotEmpty &&
+          _maxRoundsValue != null &&
+          _roomSizeValue != null) {
+        Map<String, String> data = {
+          "nickname": _nameController.text,
+          "name": _roomNameController.text,
+          "occupancy": _maxRoundsValue!,
+          "maxRounds": _roomSizeValue!
+        };
+        print(data);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => GamePlayingPage(
+                    data: data,
+                    screenFrom: "createRoom",
+                    socket: _socket,
+                  )),
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -106,6 +124,7 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
+                    flex: 1,
                     child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         filled:
@@ -117,7 +136,7 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
                         ),
                       ),
                       hint: Text(
-                        'Select Max Player',
+                        'Max Rounds',
                         style: GoogleFonts.blackOpsOne(),
                       ), // Placeholder
                       onChanged: (String? newValue) {
@@ -125,7 +144,7 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
                           _roomSizeValue = newValue;
                         });
                       },
-                      items: <String>['2', '3', '4', '5', '6', '7', '8']
+                      items: <String>['2', '5', '10', '15']
                           .map<DropdownMenuItem<String>>(
                             (String value) => DropdownMenuItem<String>(
                               value: value,
@@ -139,6 +158,7 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
                     width: MediaQuery.of(context).size.width * 0.05,
                   ),
                   Expanded(
+                    flex: 1,
                     child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         filled:
@@ -150,7 +170,7 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
                         ),
                       ),
                       hint: Text(
-                        'Select Max Rounds',
+                        'Max Player',
                         style: GoogleFonts.blackOpsOne(),
                       ), // Placeholder
                       onChanged: (String? newValue) {
@@ -158,7 +178,7 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
                           _maxRoundsValue = newValue;
                         });
                       },
-                      items: <String>['2', '5', '10', '15']
+                      items: <String>['2', '3', '4', '5', '6', '7', '8']
                           .map<DropdownMenuItem<String>>(
                             (String value) => DropdownMenuItem<String>(
                               value: value,

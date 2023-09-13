@@ -108,13 +108,10 @@ class _HomePageState extends State<HomePage> {
                             Icons.door_sliding,
                             color: Colors.black,
                           ),
-                          label: Padding(
-                            padding: const EdgeInsets.only(left: 15, right: 15),
-                            child: Text(
-                              "Join",
-                              style: GoogleFonts.blackOpsOne(
-                                  fontSize: 30, color: Colors.black),
-                            ),
+                          label: Text(
+                            "Join",
+                            style: GoogleFonts.blackOpsOne(
+                                fontSize: 30, color: Colors.black),
                           ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.yellow[300],

@@ -15,8 +15,12 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 class GamePlayingPage extends StatefulWidget {
   final Map<String, String> data;
   final String screenFrom;
-  const GamePlayingPage(
-      {Key? key, required this.data, required this.screenFrom})
+  late IO.Socket socket;
+  GamePlayingPage(
+      {Key? key,
+      required this.data,
+      required this.screenFrom,
+      required this.socket})
       : super(key: key);
 
   @override
@@ -24,7 +28,6 @@ class GamePlayingPage extends StatefulWidget {
 }
 
 class _GamePlayingPageState extends State<GamePlayingPage> {
-  late IO.Socket _socket;
   List<TouchPoints> points = [];
   Map dataOfRoom = {};
   StrokeCap strokeType = StrokeCap.round;
@@ -47,16 +50,19 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
 
   @override
   void initState() {
+    try {
+      connect();
+    } catch (e) {
+      print(e);
+    }
     super.initState();
-    connect();
-    print(widget.data['nickname']);
   }
 
   void startTimer() {
     const second = const Duration(seconds: 1);
     _timer = Timer.periodic(second, (Timer timer) {
       if (_start == 0) {
-        _socket.emit('change-turn', dataOfRoom['name']);
+        widget.socket.emit('change-turn', dataOfRoom['name']);
         setState(() {
           _timer.cancel();
         });
@@ -79,21 +85,21 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
   }
 
   void connect() {
-    _socket = IO.io('http://192.168.56.1:3000/', <String, dynamic>{
+    widget.socket = IO.io('http://10.10.18.100:3000/', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false
     });
-    _socket.connect();
+    widget.socket.connect();
 
     if (widget.screenFrom == "createRoom") {
-      _socket.emit("create-game", widget.data);
+      widget.socket.emit("create-game", widget.data);
     } else {
-      _socket.emit("join-game", widget.data);
+      widget.socket.emit("join-game", widget.data);
     }
 
-    _socket.onConnect((data) {
+    widget.socket.onConnect((data) {
       print("connected");
-      _socket.on('updateRoom', (roomData) {
+      widget.socket.on('updateRoom', (roomData) {
         print(roomData['word']);
         setState(() {
           renderBlankText(roomData['word']);
@@ -113,13 +119,13 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
         }
       });
 
-      _socket.on('msg', (msgData) {
+      widget.socket.on('msg', (msgData) {
         setState(() {
           messages.add(msgData);
           guessedTurn = msgData['guessedTurn'];
         });
         if (guessedTurn == dataOfRoom['players'].length - 1) {
-          _socket.emit('change-turn', dataOfRoom['name']);
+          widget.socket.emit('change-turn', dataOfRoom['name']);
         }
         _chatScrollController.animateTo(
             _chatScrollController.position.maxScrollExtent + 40,
@@ -127,7 +133,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
             curve: Curves.easeInOut);
       });
 
-      _socket.on('change-turn', (data) {
+      widget.socket.on('change-turn', (data) {
         String oldWord = dataOfRoom['word'];
         showDialog(
             context: context,
@@ -151,7 +157,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
             });
       });
 
-      _socket.on(
+      widget.socket.on(
           'notCorrectGame',
           (data) => Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
@@ -159,7 +165,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
               ),
               (route) => false));
 
-      _socket.on('points', (point) {
+      widget.socket.on('points', (point) {
         if (point['details'] != null) {
           setState(() {
             points.add(TouchPoints(
@@ -174,7 +180,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
         }
       });
 
-      _socket.on('update-score', (roomData) {
+      widget.socket.on('update-score', (roomData) {
         scoreboard.clear();
         for (int i = 0; i < roomData['players'].length; i++) {
           setState(() {
@@ -186,7 +192,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
         }
       });
 
-      _socket.on(
+      widget.socket.on(
         "show-leaderboard",
         (roomPlayers) {
           scoreboard.clear();
@@ -210,7 +216,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
         },
       );
 
-      _socket.on('color-change', (colorString) {
+      widget.socket.on('color-change', (colorString) {
         int value = int.parse(colorString, radix: 16);
         Color otherColor = new Color(value);
         setState(() {
@@ -218,26 +224,26 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
         });
       });
 
-      _socket.on('stroke-width', (value) {
+      widget.socket.on('stroke-width', (value) {
         setState(() {
           strokeWidth = value.toDouble();
         });
       });
 
-      _socket.on('clean-screen', (value) {
+      widget.socket.on('clean-screen', (value) {
         setState(() {
           points.clear();
         });
       });
 
-      _socket.on('close-input', (_) {
-        _socket.emit('update-score', widget.data['name']);
+      widget.socket.on('close-input', (_) {
+        widget.socket.emit('update-score', widget.data['name']);
         setState(() {
           isTextReadonly = true;
         });
       });
 
-      _socket.on('user-disconnected', (data) {
+      widget.socket.on('user-disconnected', (data) {
         scoreboard.clear();
         for (int i = 0; i < data['players'].length; i++) {
           setState(() {
@@ -253,7 +259,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
 
   @override
   void dispose() {
-    _socket.dispose();
+    widget.socket.dispose();
     _timer.cancel();
     super.dispose();
   }
@@ -278,7 +284,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                         'color': valueString,
                         'roomName': dataOfRoom['name']
                       };
-                      _socket.emit('color-change', map);
+                      widget.socket.emit('color-change', map);
                     },
                   ),
                 ),
@@ -321,7 +327,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                               height: MediaQuery.of(context).size.height * 0.55,
                               child: GestureDetector(
                                 onPanUpdate: (details) {
-                                  _socket.emit('paint', {
+                                  widget.socket.emit('paint', {
                                     'details': {
                                       'dx': details.localPosition.dx,
                                       'dy': details.localPosition.dy
@@ -330,7 +336,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                                   });
                                 },
                                 onPanStart: (details) {
-                                  _socket.emit('paint', {
+                                  widget.socket.emit('paint', {
                                     'details': {
                                       'dx': details.localPosition.dx,
                                       'dy': details.localPosition.dy
@@ -339,7 +345,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                                   });
                                 },
                                 onPanEnd: (details) {
-                                  _socket.emit('paint', {
+                                  widget.socket.emit('paint', {
                                     'details': null,
                                     'roomName': widget.data['name'],
                                   });
@@ -393,14 +399,14 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                                         "roomName": dataOfRoom['name']
                                       };
                                       print(strokeWidth);
-                                      _socket.emit('stroke-width', map);
+                                      widget.socket.emit('stroke-width', map);
                                     },
                                     value: strokeWidth,
                                   ),
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    _socket.emit(
+                                    widget.socket.emit(
                                         'clean-screen', dataOfRoom['name']);
                                   },
                                   icon: Icon(
@@ -453,7 +459,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                           ],
                         ),
                         dataOfRoom['turn']['nickname'] !=
-                                widget.data['nickname']
+                                widget.data?['nickname']
                             ? Align(
                                 alignment: Alignment.bottomCenter,
                                 child: Container(
@@ -465,7 +471,8 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                                       print(value.trim());
                                       if (value.trim().isNotEmpty) {
                                         Map map = {
-                                          'username': widget.data['nickname'],
+                                          'username': widget.data['nickname'] ??
+                                              'Guest',
                                           'msg': value.trim(),
                                           'word': dataOfRoom['word'],
                                           'roomName': widget.data['name'],
@@ -473,7 +480,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                                           'totalTime': 60,
                                           'timeTaken': 60 - _start
                                         };
-                                        _socket.emit('msg', map);
+                                        widget.socket.emit('msg', map);
                                         _messageTextController.clear();
                                       }
                                     },
@@ -520,7 +527,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
             ? FloatingActionButton(
                 onPressed: () {
                   scoreboard.clear();
-                  _socket.emit("delete-document", {
+                  widget.socket.emit("delete-document", {
                     'collectionName': 'rooms',
                     'documentName': dataOfRoom['name']
                   });

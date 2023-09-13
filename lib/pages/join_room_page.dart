@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamebarin/games/game_playing_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class JoinRoomPage extends StatefulWidget {
   const JoinRoomPage({Key? key}) : super(key: key);
@@ -14,22 +15,37 @@ class JoinRoomPage extends StatefulWidget {
 class _JoinRoomPageState extends State<JoinRoomPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _roomNameController = TextEditingController();
+  late IO.Socket _socket;
 
-  void joinRoom() {
-    if (_nameController.text.isNotEmpty &&
-        _roomNameController.text.isNotEmpty) {
-      Map<String, String> data = {
-        "nickname": _nameController.text,
-        "name": _roomNameController.text
-      };
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => GamePlayingPage(
-                  data: data,
-                  screenFrom: "joinRoom",
-                )),
-      );
+  connect() {
+    _socket = IO.io('http://10.10.18.100:3000/', <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false
+    });
+    _socket.connect();
+  }
+
+  void joinRoom() async {
+    try {
+      await connect();
+      if (_nameController.text.isNotEmpty &&
+          _roomNameController.text.isNotEmpty) {
+        Map<String, String> data = {
+          "nickname": _nameController.text,
+          "name": _roomNameController.text
+        };
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => GamePlayingPage(
+                    data: data,
+                    screenFrom: "joinRoom",
+                    socket: _socket,
+                  )),
+        );
+      }
+    } catch (e) {
+      print(e);
     }
   }
 

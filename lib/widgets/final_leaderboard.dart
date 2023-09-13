@@ -69,7 +69,6 @@ class _FinalLeaderboardState extends State<FinalLeaderboard> {
               ListView.builder(
                 primary: true,
                 shrinkWrap: true,
-                reverse: true,
                 itemCount: widget.scoreboard.length,
                 itemBuilder: (context, index) {
                   var data = widget.scoreboard[index].values;
