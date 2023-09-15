@@ -18,14 +18,12 @@ class SplashScreen extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/bg-pattern.jpg', // Ganti dengan path gambar latar belakang Anda
+              'assets/bg-pattern.jpg',
               fit: BoxFit.cover,
             ),
           ),
-          // Latar belakang warna biru dengan opasitas
           Container(
-            color: Colors.blue.withOpacity(
-                0.5), // Ganti dengan warna dan opasitas yang diinginkan
+            color: Colors.blue.withOpacity(0.5),
           ),
           Center(
             child: Row(
@@ -40,7 +38,7 @@ class SplashScreen extends StatelessWidget {
                   style: GoogleFonts.blackOpsOne(fontSize: 40),
                 ),
               ],
-            ), // Ganti dengan path gambar Anda
+            ),
           ),
         ],
       ),
