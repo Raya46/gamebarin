@@ -15,6 +15,10 @@ const playerSchema = new mongoose.Schema({
     points: {
         type: Number,
         default: 0
+    },
+    reports: {
+        type: Number,
+        default: 0 
     }
 })
 

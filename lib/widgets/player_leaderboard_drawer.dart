@@ -6,17 +6,20 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 class PlayerDrawer extends StatefulWidget {
   final List<Map> userData;
   final Map dataOfRoom;
+  final Map<String, String> data;
   late IO.Socket socket;
-  late Timer _timer;
+  Timer _timer;
 
-  PlayerDrawer(this.userData, this.dataOfRoom, this.socket, this._timer);
+  PlayerDrawer(
+      this.userData, this.dataOfRoom, this.socket, this._timer, this.data);
 
   @override
   State<PlayerDrawer> createState() => _PlayerDrawerState();
 }
 
 class _PlayerDrawerState extends State<PlayerDrawer> {
-  void _showModal(BuildContext context, String player) {
+  bool isButtonClicked = false;
+  void _showModal(BuildContext context, String player, int playerIndex) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -27,11 +30,8 @@ class _PlayerDrawerState extends State<PlayerDrawer> {
             TextButton(
               child: Text('Report'),
               onPressed: () {
+                widget._timer.cancel();
                 widget.socket.emit('change-turn', widget.dataOfRoom['name']);
-                setState(() {
-                  widget._timer.cancel();
-                  // print(widget.dataOfRoom);
-                });
               },
             ),
           ],
@@ -40,45 +40,58 @@ class _PlayerDrawerState extends State<PlayerDrawer> {
     );
   }
 
+  bool isDrawingPlayer(int index) {
+    return widget.dataOfRoom['turn']['nickname'] ==
+        widget.userData[index]['username'];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Center(
-          child: Container(
-        height: double.maxFinite,
-        child: ListView.builder(
-          itemCount: widget.userData.length,
-          itemBuilder: (context, index) {
-            var data = widget.userData[index].values;
-            return Container(
-              margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  widget.dataOfRoom['turnIndex'] == 0
-                      ? Text(data.elementAt(0) + 'is drawing')
-                      : Text(data.elementAt(0)),
-                  Row(
-                    children: [
-                      Text(data.elementAt(1)),
-                      IconButton(
-                        onPressed: () {
-                          _showModal(context, data.elementAt(0));
-                        },
-                        icon: const Icon(
-                          Icons.report,
-                          size: 24.0,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          },
+        child: Container(
+          height: double.maxFinite,
+          child: ListView.builder(
+            itemCount: widget.userData.length,
+            itemBuilder: (context, index) {
+              var data = widget.userData[index].values;
+              return Container(
+                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(data.elementAt(0)),
+                    Row(
+                      children: [
+                        if (isDrawingPlayer(index))
+                          Icon(
+                            Icons.create,
+                            size: 24.0,
+                            color:
+                                Colors.blue, // Ubah warna sesuai keinginan Anda
+                          ),
+                        Text(isDrawingPlayer(index) ? '' : data.elementAt(1)),
+                        if (isDrawingPlayer(index))
+                          IconButton(
+                            onPressed: () {
+                              // print(index);
+                              _showModal(context, data.elementAt(0), index);
+                            },
+                            icon: const Icon(
+                              Icons.report,
+                              size: 24.0,
+                              color: Colors.red,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
-      )),
+      ),
     );
   }
 }

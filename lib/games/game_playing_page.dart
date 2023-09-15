@@ -52,6 +52,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
   void initState() {
     try {
       connect();
+      _timer = Timer.periodic(Duration(seconds: 1), (timer) {});
     } catch (e) {
       print(e);
     }
@@ -85,7 +86,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
   }
 
   void connect() {
-    widget.socket = IO.io('http://10.10.18.100:3000/', <String, dynamic>{
+    widget.socket = IO.io('http://192.168.1.9:3000/', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false
     });
@@ -301,7 +302,8 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
 
     return Scaffold(
       key: scaffoldKey,
-      drawer: PlayerDrawer(scoreboard, dataOfRoom, widget.socket, _timer),
+      drawer: PlayerDrawer(
+          scoreboard, dataOfRoom, widget.socket, _timer, widget.data),
       body: dataOfRoom != null
           ? dataOfRoom['isJoin'] != true
               ? !isShowFinalLeaderboard
@@ -470,7 +472,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: 20.0),
                                   child: TextField(
-                                    readOnly: isTextReadonly,
+                                    readOnly: points.isEmpty,
                                     onSubmitted: (value) {
                                       print(value.trim());
                                       if (value.trim().isNotEmpty) {

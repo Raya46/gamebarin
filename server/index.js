@@ -127,6 +127,7 @@ io.on('connection', (socket) => {
         }
     })
 
+
     socket.on('update-score', async (name) => {
         try {
             const room = await Room.findOne({name})
