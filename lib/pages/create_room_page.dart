@@ -88,8 +88,8 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
                   fillColor: Colors.white,
                   labelText: "Your Name",
                   labelStyle: GoogleFonts.blackOpsOne(),
-                  border: OutlineInputBorder(),
-                  suffixIcon: Icon(
+                  border: const OutlineInputBorder(),
+                  suffixIcon: const Icon(
                     Icons.person,
                     size: 24.0,
                   ),
@@ -105,8 +105,8 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
                   fillColor: Colors.white,
                   labelText: "Room Name",
                   labelStyle: GoogleFonts.blackOpsOne(),
-                  border: OutlineInputBorder(),
-                  suffixIcon: Icon(
+                  border: const OutlineInputBorder(),
+                  suffixIcon: const Icon(
                     Icons.meeting_room,
                     size: 24.0,
                   ),

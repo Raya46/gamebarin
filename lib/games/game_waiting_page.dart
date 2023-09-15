@@ -68,7 +68,6 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
                         'collectionName': 'rooms',
                         'documentName': widget.lobbyName
                       });
-                      print(widget.lobbyName);
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -79,8 +78,8 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
                           side: BorderSide(width: 2),
                         ),
                         color: Colors.blue[100],
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
+                        child: const Padding(
+                          padding: EdgeInsets.all(2.0),
                           child: Icon(
                             Icons.cancel,
                             color: Colors.red,
@@ -119,12 +118,11 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
                   onTap: () {
                     Clipboard.setData(ClipboardData(text: widget.lobbyName));
                     ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text("copied!")));
+                        .showSnackBar(const SnackBar(content: Text("copied!")));
                   },
-                  child: CircleAvatar(
+                  child: const CircleAvatar(
                     child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.copy)),
+                        padding: EdgeInsets.all(8.0), child: Icon(Icons.copy)),
                   ),
                 ),
               ]),
@@ -172,7 +170,7 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.03,
                   ),
-                  CircularProgressIndicator()
+                  const CircularProgressIndicator()
                 ],
               ),
             ],

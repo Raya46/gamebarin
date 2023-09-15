@@ -42,8 +42,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-
-                // Image.asset('assets/logogamebarin.png', fit: BoxFit.cover),
                 Card(
                   color: Colors.white,
                   margin: const EdgeInsets.only(left: 20, right: 20),

@@ -301,7 +301,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
 
     return Scaffold(
       key: scaffoldKey,
-      drawer: PlayerDrawer(scoreboard),
+      drawer: PlayerDrawer(scoreboard, dataOfRoom, widget.socket, _timer),
       body: dataOfRoom != null
           ? dataOfRoom['isJoin'] != true
               ? !isShowFinalLeaderboard
@@ -309,14 +309,12 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                       children: [
                         Positioned.fill(
                           child: Image.asset(
-                            'assets/bg-pattern.jpg', // Ganti dengan path gambar latar belakang Anda
+                            'assets/bg-pattern.jpg',
                             fit: BoxFit.cover,
                           ),
                         ),
-                        // Latar belakang warna biru dengan opasitas
                         Container(
-                          color: Colors.blue.withOpacity(
-                              0.5), // Ganti dengan warna dan opasitas yang diinginkan
+                          color: Colors.blue.withOpacity(0.5),
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -366,10 +364,16 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                             ),
                             dataOfRoom['turn']['nickname'] !=
                                     widget.data['nickname']
-                                ? Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: blankText,
+                                ? Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: blankText,
+                                      ),
+                                      Text(
+                                          '${dataOfRoom['turn']['nickname']} is drawing')
+                                    ],
                                   )
                                 : Center(
                                     child: Text(

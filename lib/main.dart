@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gamebarin/splash_screen.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized(); // Tambahkan baris ini
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
