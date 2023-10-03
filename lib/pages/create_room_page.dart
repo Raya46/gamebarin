@@ -20,7 +20,7 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
   late IO.Socket _socket;
 
   connect() {
-    _socket = IO.io('http://10.10.18.100:3000/', <String, dynamic>{
+    _socket = IO.io('http://10.10.18.177:3000/', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false
     });
@@ -148,7 +148,7 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
                               value: value,
                               child: Text(value),
                             ),
-                          )
+                          ) 
                           .toList(),
                     ),
                   ),

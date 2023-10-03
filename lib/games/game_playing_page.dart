@@ -86,7 +86,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
   }
 
   void connect() {
-    widget.socket = IO.io('http://192.168.1.9:3000/', <String, dynamic>{
+    widget.socket = IO.io('http://10.10.18.194:3000/', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false
     });
@@ -201,7 +201,9 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
             setState(() {
               scoreboard.add({
                 'username': roomPlayers[i]['nickname'],
-                'points': roomPlayers[i]['points'].toString()
+                'points': roomPlayers[i]['points'].toString(),
+                'level': roomPlayers[i]['level'].toString(),
+                'tier': roomPlayers[i]['tier'],
               });
             });
             if (maxPoints < int.parse(scoreboard[i]['points'])) {
@@ -303,7 +305,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
     return Scaffold(
       key: scaffoldKey,
       drawer: PlayerDrawer(
-          scoreboard, dataOfRoom, widget.socket, _timer, widget.data),
+          scoreboard, dataOfRoom, widget.socket, _timer, widget.data, points),
       body: dataOfRoom != null
           ? dataOfRoom['isJoin'] != true
               ? !isShowFinalLeaderboard

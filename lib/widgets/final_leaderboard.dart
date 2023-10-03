@@ -16,9 +16,6 @@ class FinalLeaderboard extends StatefulWidget {
 }
 
 class _FinalLeaderboardState extends State<FinalLeaderboard> {
-  int counter1 = 0;
-  int counter2 = 0;
-
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
@@ -72,10 +69,42 @@ class _FinalLeaderboardState extends State<FinalLeaderboard> {
                   var data = widget.scoreboard[index].values;
                   return Card(
                     child: ListTile(
-                      leading: Icon(Icons.person),
-                      title: Text(
-                        data.elementAt(0),
-                        style: GoogleFonts.blackOpsOne(fontSize: 20),
+                      leading: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 16,
+                            child: Text(data.elementAt(2)),
+                          ),
+                          Text(
+                            'LEVEL',
+                            style: GoogleFonts.blackOpsOne(fontSize: 8),
+                          ),
+                        ],
+                      ),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            data.elementAt(0),
+                            style: GoogleFonts.blackOpsOne(fontSize: 20),
+                          ),
+                          Text(
+                            data.elementAt(3),
+                            style: GoogleFonts.blackOpsOne(
+                                fontSize: 13,
+                                color: widget.scoreboard[index]['tier'] ==
+                                        'Noob'
+                                    ? Colors.grey
+                                    : widget.scoreboard[index]['tier'] ==
+                                            'Intermediate'
+                                        ? Colors.green
+                                        : widget.scoreboard[index]['tier'] ==
+                                                'Expert'
+                                            ? Colors.deepOrangeAccent
+                                            : Colors.greenAccent),
+                          )
+                        ],
                       ),
                       trailing: Text(
                         '${data.elementAt(1)}🌟',

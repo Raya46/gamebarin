@@ -85,6 +85,17 @@ io.on('connection', (socket) => {
                 let userPlayer = room[0].players.filter((player) => player.nickname === data.username)
                 if (data.timeTaken !== 0) {
                     userPlayer[0].points += Math.round((200/data.timeTaken)*10)
+                    userPlayer[0].level += Math.round((5/data.timeTaken)*10)
+                    if (userPlayer[0].level >= 0 && userPlayer[0].level <= 5) {
+                        userPlayer[0].tier = 'Noob';
+                      } else if (userPlayer[0].level >= 6 && userPlayer[0].level <= 10) {
+                        userPlayer[0].tier = 'Intermediate';
+                      } else if (userPlayer[0].level >= 11 && userPlayer[0].level <= 15) {
+                        userPlayer[0].tier = 'Expert';
+                      } else {
+                        userPlayer[0].tier =
+                            'Master'; 
+                      }
                 }
                 room = await room[0].save()
                 io.to(data.roomName).emit('msg', {

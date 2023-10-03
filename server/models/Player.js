@@ -16,9 +16,12 @@ const playerSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    reports: {
+    level: {
         type: Number,
         default: 0 
+    },
+    tier: {
+        type: String
     }
 })
 

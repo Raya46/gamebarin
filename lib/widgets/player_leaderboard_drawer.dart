@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:gamebarin/models/touch_points.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class PlayerDrawer extends StatefulWidget {
@@ -8,10 +9,11 @@ class PlayerDrawer extends StatefulWidget {
   final Map dataOfRoom;
   final Map<String, String> data;
   late IO.Socket socket;
+  List<TouchPoints> points = [];
   Timer _timer;
 
-  PlayerDrawer(
-      this.userData, this.dataOfRoom, this.socket, this._timer, this.data);
+  PlayerDrawer(this.userData, this.dataOfRoom, this.socket, this._timer,
+      this.data, this.points);
 
   @override
   State<PlayerDrawer> createState() => _PlayerDrawerState();
@@ -24,11 +26,11 @@ class _PlayerDrawerState extends State<PlayerDrawer> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Report'),
+          title: const Text('Report'),
           content: Text('Report player $player?'),
           actions: <Widget>[
             TextButton(
-              child: Text('Report'),
+              child: const Text('Report'),
               onPressed: () {
                 widget._timer.cancel();
                 widget.socket.emit('change-turn', widget.dataOfRoom['name']);
@@ -56,7 +58,7 @@ class _PlayerDrawerState extends State<PlayerDrawer> {
             itemBuilder: (context, index) {
               var data = widget.userData[index].values;
               return Container(
-                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -64,14 +66,14 @@ class _PlayerDrawerState extends State<PlayerDrawer> {
                     Row(
                       children: [
                         if (isDrawingPlayer(index))
-                          Icon(
+                          const Icon(
                             Icons.create,
                             size: 24.0,
                             color:
                                 Colors.blue, // Ubah warna sesuai keinginan Anda
                           ),
                         Text(isDrawingPlayer(index) ? '' : data.elementAt(1)),
-                        if (isDrawingPlayer(index))
+                        if (isDrawingPlayer(index) && widget.points.isNotEmpty)
                           IconButton(
                             onPressed: () {
                               // print(index);
