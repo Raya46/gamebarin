@@ -22,6 +22,9 @@ class SplashScreen extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
+          Container(
+            color: Colors.blue.withOpacity(0.5),
+          ),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
