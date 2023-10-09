@@ -21,7 +21,7 @@ class _FinalLeaderboardState extends State<FinalLeaderboard> {
     return Stack(children: [
       Positioned.fill(
         child: Image.asset(
-          'assets/bg-pattern.jpg',
+          'assets/bg.png',
           fit: BoxFit.cover,
         ),
       ),
@@ -61,6 +61,9 @@ class _FinalLeaderboardState extends State<FinalLeaderboard> {
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 10.0,
+              ),
               ListView.builder(
                 primary: true,
                 shrinkWrap: true,
@@ -74,7 +77,7 @@ class _FinalLeaderboardState extends State<FinalLeaderboard> {
                         children: [
                           CircleAvatar(
                             radius: 16,
-                            child: Text(data.elementAt(2)),
+                            child: Text('${data.elementAt(2)}'),
                           ),
                           Text(
                             'LEVEL',
@@ -86,11 +89,11 @@ class _FinalLeaderboardState extends State<FinalLeaderboard> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            data.elementAt(0),
+                            '${data.elementAt(0)}',
                             style: GoogleFonts.blackOpsOne(fontSize: 20),
                           ),
                           Text(
-                            data.elementAt(3),
+                            '${data.elementAt(3) ?? 'afk'}',
                             style: GoogleFonts.blackOpsOne(
                                 fontSize: 13,
                                 color: widget.scoreboard[index]['tier'] ==

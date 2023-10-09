@@ -32,7 +32,7 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
   }
 
   connect() {
-    _socket = IO.io('http://10.10.18.194:3000/', <String, dynamic>{
+    _socket = IO.io('http://10.10.18.152:3000/', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false
     });
@@ -45,7 +45,7 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
       children: [
         Positioned.fill(
           child: Image.asset(
-            'assets/bg-pattern.jpg',
+            'assets/bg.png',
             fit: BoxFit.cover,
           ),
         ),
@@ -74,8 +74,9 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
                               builder: (context) => const HomePage()));
                     },
                     child: Card(
-                        shape: const RoundedRectangleBorder(
+                        shape: RoundedRectangleBorder(
                           side: BorderSide(width: 2),
+                          borderRadius: BorderRadius.circular(16.0),
                         ),
                         color: Colors.blue[100],
                         child: const Padding(
@@ -83,21 +84,23 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
                           child: Icon(
                             Icons.cancel,
                             color: Colors.red,
-                            size: 40,
+                            size: 50,
                           ),
                         )),
                   ),
                   Card(
-                    shape: const RoundedRectangleBorder(
-                      side: BorderSide(width: 2),
-                    ),
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(width: 2),
+                        borderRadius: BorderRadius.circular(16.0)),
                     color: Colors.blue[100],
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "Players",
-                        style: GoogleFonts.blackOpsOne(
-                            fontSize: 20, letterSpacing: 24),
+                        style: TextStyle(
+                            fontFamily: "Super Boys",
+                            fontSize: 30,
+                            letterSpacing: 10),
                       ),
                     ),
                   ),
@@ -106,54 +109,120 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(
-                  'Room Name: ${widget.lobbyName}',
-                  style: GoogleFonts.blackOpsOne(fontSize: 20),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.05,
-                ),
-                InkWell(
-                  onTap: () {
-                    Clipboard.setData(ClipboardData(text: widget.lobbyName));
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(const SnackBar(content: Text("copied!")));
-                  },
-                  child: const CircleAvatar(
-                    child: Padding(
-                        padding: EdgeInsets.all(8.0), child: Icon(Icons.copy)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Stack(
+                    children: [
+                      Text(
+                        'Room',
+                        style: TextStyle(
+                          fontFamily: 'Super Boys',
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 4.0,
+                          foreground: Paint()
+                            ..style = PaintingStyle.stroke
+                            ..strokeWidth = 6
+                            ..color = Colors.black,
+                        ),
+                      ),
+                      Text(
+                        'Room',
+                        style: TextStyle(
+                          fontFamily: 'Super Boys',
+                          letterSpacing: 4.0,
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF75CFFF),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ]),
+                  Stack(
+                    children: [
+                      Text(
+                        'Name : ${widget.lobbyName}',
+                        style: TextStyle(
+                          letterSpacing: 4.0,
+                          fontFamily: 'Super Boys',
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                          foreground: Paint()
+                            ..style = PaintingStyle.stroke
+                            ..strokeWidth = 6
+                            ..color = Colors.black,
+                        ),
+                      ),
+                      Text(
+                        'Name : ${widget.lobbyName}',
+                        style: TextStyle(
+                          letterSpacing: 4.0,
+                          fontFamily: 'Super Boys',
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFFFBF00),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 20.0,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Clipboard.setData(ClipboardData(text: widget.lobbyName));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("copied!")));
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.amber,
+                      child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.copy,
+                            color: Colors.black,
+                          )),
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: ListView.builder(
-                    primary: true,
-                    shrinkWrap: true,
-                    itemCount: widget.numberOfPlayers,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        shape: const RoundedRectangleBorder(
-                          side: BorderSide(width: 2),
-                        ),
-                        color: Colors.yellow[300],
-                        child: ListTile(
-                          leading: Text(
-                            "${index + 1}",
-                            style: GoogleFonts.blackOpsOne(fontSize: 20),
+              Container(
+                margin: const EdgeInsets.only(
+                  left: 30.0,
+                  right: 30.0,
+                ),
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: ListView.builder(
+                      primary: true,
+                      shrinkWrap: true,
+                      itemCount: widget.numberOfPlayers,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          shape: RoundedRectangleBorder(
+                              side: BorderSide(width: 2),
+                              borderRadius: BorderRadius.circular(16)),
+                          color: Colors.yellow[300],
+                          child: ListTile(
+                            leading: Text(
+                              "${index + 1}",
+                              style: TextStyle(
+                                  fontFamily: "Super Boys", fontSize: 20),
+                            ),
+                            title: Text(
+                              widget.players[index]['nickname'],
+                              style: TextStyle(
+                                  fontFamily: "Super Boys", fontSize: 20),
+                            ),
                           ),
-                          title: Text(
-                            widget.players[index]['nickname'],
-                            style: GoogleFonts.blackOpsOne(fontSize: 20),
-                          ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -170,7 +239,9 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.03,
                   ),
-                  const CircularProgressIndicator()
+                  const CircularProgressIndicator(
+                    color: Colors.black,
+                  )
                 ],
               ),
             ],

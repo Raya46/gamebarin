@@ -3,14 +3,9 @@ import 'package:gamebarin/pages/create_room_page.dart';
 import 'package:gamebarin/pages/join_room_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +13,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/bg-pattern.jpg',
+              'assets/bg.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -32,39 +27,86 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
-                      Icons.draw,
-                      size: 46.0,
+                    Stack(
+                      children: [
+                        Text(
+                          'Game',
+                          style: TextStyle(
+                            fontFamily: 'Super Boys',
+                            fontSize: 40.0,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 4.0,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 6
+                              ..color = Colors.black,
+                          ),
+                        ),
+                        Text(
+                          'Game',
+                          style: TextStyle(
+                            fontFamily: 'Super Boys',
+                            letterSpacing: 4.0,
+                            fontSize: 40.0,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF75CFFF),
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      "Gamebarin",
-                      style: GoogleFonts.blackOpsOne(fontSize: 40),
+                    Stack(
+                      children: [
+                        Text(
+                          'Barin',
+                          style: TextStyle(
+                            letterSpacing: 4.0,
+                            fontFamily: 'Super Boys',
+                            fontSize: 40.0,
+                            fontWeight: FontWeight.bold,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 6
+                              ..color = Colors.black,
+                          ),
+                        ),
+                        Text(
+                          'Barin',
+                          style: TextStyle(
+                            letterSpacing: 4.0,
+                            fontFamily: 'Super Boys',
+                            fontSize: 40.0,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFFFFBF00),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
+                Text(
+                  'Draw, Guess, Win',
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
                 Card(
                   color: Colors.white,
-                  margin: const EdgeInsets.only(left: 20, right: 20),
+                  margin: const EdgeInsets.only(left: 30, right: 30),
                   elevation: 5,
                   child: Column(children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.02,
+                    const SizedBox(
+                      height: 10.0,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Card(
-                        shape: const RoundedRectangleBorder(
-                          side: BorderSide(width: 2),
-                        ),
-                        color: Colors.blue[100],
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "Draw, Guess, Win",
-                            style: GoogleFonts.blackOpsOne(fontSize: 20),
-                          ),
-                        ),
-                      ),
+                    Image.asset(
+                      'assets/txtdraw.png',
+                    ),
+                    const SizedBox(
+                      height: 30.0,
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.02,
@@ -77,8 +119,11 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.black),
                           label: Text(
                             "Create",
-                            style: GoogleFonts.blackOpsOne(
-                                fontSize: 30, color: Colors.black),
+                            style: TextStyle(
+                              fontFamily: 'Super Boys',
+                              fontSize: 30.0,
+                              color: Colors.black,
+                            ),
                           ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue[300],
@@ -104,8 +149,11 @@ class _HomePageState extends State<HomePage> {
                           ),
                           label: Text(
                             "Join",
-                            style: GoogleFonts.blackOpsOne(
-                                fontSize: 30, color: Colors.black),
+                            style: TextStyle(
+                              fontFamily: 'Super Boys',
+                              fontSize: 30.0,
+                              color: Colors.black,
+                            ),
                           ),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.yellow[300],

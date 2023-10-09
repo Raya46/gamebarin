@@ -56,7 +56,7 @@ class _JoinRoomPageState extends State<JoinRoomPage> {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/bg-pattern.jpg',
+              'assets/bg.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -68,41 +68,119 @@ class _JoinRoomPageState extends State<JoinRoomPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "Join Room",
-                  style: GoogleFonts.blackOpsOne(fontSize: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Stack(
+                      children: [
+                        Text(
+                          'Join ',
+                          style: TextStyle(
+                            fontFamily: 'Super Boys',
+                            fontSize: 40.0,
+                            fontWeight: FontWeight.bold,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 6
+                              ..color = Colors.black,
+                          ),
+                        ),
+                        Text(
+                          'Join ',
+                          style: TextStyle(
+                            fontFamily: 'Super Boys',
+                            fontSize: 40.0,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF75CFFF),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Stack(
+                      children: [
+                        Text(
+                          'Room',
+                          style: TextStyle(
+                            fontFamily: 'Super Boys',
+                            fontSize: 40.0,
+                            fontWeight: FontWeight.bold,
+                            foreground: Paint()
+                              ..style = PaintingStyle.stroke
+                              ..strokeWidth = 6
+                              ..color = Colors.black,
+                          ),
+                        ),
+                        Text(
+                          'Room',
+                          style: TextStyle(
+                            fontFamily: 'Super Boys',
+                            fontSize: 40.0,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFFFFBF00),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
-                TextFormField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                    labelText: "Player Name",
-                    filled: true,
-                    fillColor: Colors.white,
-                    labelStyle: GoogleFonts.blackOpsOne(),
-                    border: const OutlineInputBorder(),
-                    suffixIcon: const Icon(
-                      Icons.person,
-                      size: 24.0,
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.blue[300],
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Colors.black, // Warna border
+                      width: 2.0, // Ketebalan border
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.05,
-                ),
-                TextFormField(
-                  controller: _roomNameController,
-                  decoration: InputDecoration(
-                    labelText: "Room Name",
-                    filled: true,
-                    fillColor: Colors.white,
-                    labelStyle: GoogleFonts.blackOpsOne(),
-                    border: const OutlineInputBorder(),
-                    suffixIcon: const Icon(
-                      Icons.meeting_room,
-                      size: 24.0,
+                  margin: const EdgeInsets.only(
+                    left: 10.0,
+                    right: 10.0,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: _nameController,
+                          decoration: InputDecoration(
+                            labelText: "Player Name",
+                            filled: true,
+                            fillColor: Colors.white,
+                            labelStyle: GoogleFonts.poppins(
+                                fontWeight: FontWeight.bold),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            suffixIcon: const Icon(
+                              Icons.person,
+                              size: 24.0,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.05,
+                        ),
+                        TextFormField(
+                          controller: _roomNameController,
+                          decoration: InputDecoration(
+                            labelText: "Room Name",
+                            filled: true,
+                            fillColor: Colors.white,
+                            labelStyle: GoogleFonts.poppins(
+                                fontWeight: FontWeight.bold),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            suffixIcon: const Icon(
+                              Icons.meeting_room,
+                              size: 24.0,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -113,11 +191,11 @@ class _JoinRoomPageState extends State<JoinRoomPage> {
                     icon: const Icon(Icons.door_sliding, color: Colors.black),
                     label: Padding(
                       padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: Text(
-                        "Join",
-                        style: GoogleFonts.blackOpsOne(
-                            fontSize: 30, color: Colors.black),
-                      ),
+                      child: Text("Join",
+                          style: TextStyle(
+                              fontFamily: "Super Boys",
+                              fontSize: 30,
+                              color: Colors.black)),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue[300],
@@ -131,11 +209,11 @@ class _JoinRoomPageState extends State<JoinRoomPage> {
                 ),
                 ElevatedButton.icon(
                   icon: const Icon(Icons.cancel, color: Colors.black),
-                  label: Text(
-                    "Cancel",
-                    style: GoogleFonts.blackOpsOne(
-                        fontSize: 30, color: Colors.black),
-                  ),
+                  label: Text("Cancel",
+                      style: TextStyle(
+                          fontFamily: "Super Boys",
+                          fontSize: 30,
+                          color: Colors.black)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.yellow[300],
                     shape: RoundedRectangleBorder(

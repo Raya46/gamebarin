@@ -62,7 +62,7 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
       body: Stack(children: [
         Positioned.fill(
           child: Image.asset(
-            'assets/bg-pattern.jpg',
+            'assets/bg.png',
             fit: BoxFit.cover,
           ),
         ),
@@ -70,134 +70,223 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
           color: Colors.blue.withOpacity(0.5),
         ),
         Container(
+          margin: const EdgeInsets.only(
+            left: 20.0,
+            right: 20.0,
+          ),
           padding: const EdgeInsets.all(10.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "Create Room",
-                style: GoogleFonts.blackOpsOne(fontSize: 40),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
-              TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  labelText: "Your Name",
-                  labelStyle: GoogleFonts.blackOpsOne(),
-                  border: const OutlineInputBorder(),
-                  suffixIcon: const Icon(
-                    Icons.person,
-                    size: 24.0,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
-              ),
-              TextFormField(
-                controller: _roomNameController,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  labelText: "Room Name",
-                  labelStyle: GoogleFonts.blackOpsOne(),
-                  border: const OutlineInputBorder(),
-                  suffixIcon: const Icon(
-                    Icons.meeting_room,
-                    size: 24.0,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                        filled:
-                            true, // Untuk mengisi latar belakang dengan warna
-                        fillColor: Colors
-                            .white, // Warna latar belakang yang Anda inginkan
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                  Stack(
+                    children: [
+                      Text(
+                        'Create ',
+                        style: TextStyle(
+                          fontFamily: 'Super Boys',
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                          foreground: Paint()
+                            ..style = PaintingStyle.stroke
+                            ..strokeWidth = 6
+                            ..color = Colors.black,
                         ),
                       ),
-                      hint: Text(
-                        'Max Rounds',
-                        style: GoogleFonts.blackOpsOne(),
-                      ), // Placeholder
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _roomSizeValue = newValue;
-                        });
-                      },
-                      items: <String>['2', '5', '10', '15']
-                          .map<DropdownMenuItem<String>>(
-                            (String value) => DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
+                      Text(
+                        'Create ',
+                        style: TextStyle(
+                          fontFamily: 'Super Boys',
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF75CFFF),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Stack(
+                    children: [
+                      Text(
+                        'Room',
+                        style: TextStyle(
+                          fontFamily: 'Super Boys',
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                          foreground: Paint()
+                            ..style = PaintingStyle.stroke
+                            ..strokeWidth = 6
+                            ..color = Colors.black,
+                        ),
+                      ),
+                      Text(
+                        'Room',
+                        style: TextStyle(
+                          fontFamily: 'Super Boys',
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFFFBF00),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.02,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue[300],
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: Colors.black, // Warna border
+                    width: 2.0, // Ketebalan border
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: _nameController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          labelText: "Your Name",
+                          labelStyle: GoogleFonts.poppins(
+                            fontWeight: FontWeight.bold,
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 5.0,
+                                style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          suffixIcon: const Icon(
+                            Icons.person,
+                            size: 24.0,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.05,
+                      ),
+                      TextFormField(
+                        controller: _roomNameController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          labelText: "Room Name",
+                          labelStyle: GoogleFonts.poppins(
+                            fontWeight: FontWeight.bold,
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 5.0,
+                                style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          suffixIcon: const Icon(
+                            Icons.meeting_room,
+                            size: 24.0,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.02,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.02,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: DropdownButtonFormField<String>(
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                              hint: Text(
+                                'Max Rounds',
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[800]),
+                              ), // Placeholder
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _roomSizeValue = newValue;
+                                });
+                              },
+                              items: <String>['2', '5', '10', '15']
+                                  .map<DropdownMenuItem<String>>(
+                                    (String value) => DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    ),
+                                  )
+                                  .toList(),
                             ),
-                          ) 
-                          .toList(),
-                    ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.05,
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: DropdownButtonFormField<String>(
-                      decoration: InputDecoration(
-                        filled:
-                            true, // Untuk mengisi latar belakang dengan warna
-                        fillColor: Colors
-                            .white, // Warna latar belakang yang Anda inginkan
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      hint: Text(
-                        'Max Player',
-                        style: GoogleFonts.blackOpsOne(),
-                      ), // Placeholder
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _maxRoundsValue = newValue;
-                        });
-                      },
-                      items: <String>['2', '3', '4', '5', '6', '7', '8']
-                          .map<DropdownMenuItem<String>>(
-                            (String value) => DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.05,
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: DropdownButtonFormField<String>(
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                              hint: Text(
+                                'Max Player',
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[800]),
+                              ),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _maxRoundsValue = newValue;
+                                });
+                              },
+                              items: <String>['2', '3', '4', '5', '6', '7', '8']
+                                  .map<DropdownMenuItem<String>>(
+                                    (String value) => DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    ),
+                                  )
+                                  .toList(),
                             ),
                           )
-                          .toList(),
-                    ),
-                  )
-                ],
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
               ),
               ElevatedButton.icon(
                   icon: const Icon(Icons.create_sharp, color: Colors.black),
-                  label: Text(
-                    "Create",
-                    style: GoogleFonts.blackOpsOne(
-                        fontSize: 30, color: Colors.black),
-                  ),
+                  label: Text("Create",
+                      style: TextStyle(
+                        fontFamily: "Super Boys",
+                        color: Colors.black,
+                        fontSize: 30,
+                      )),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue[300],
                     shape: RoundedRectangleBorder(
@@ -210,11 +299,12 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
               ),
               ElevatedButton.icon(
                 icon: const Icon(Icons.cancel, color: Colors.black),
-                label: Text(
-                  "Cancel",
-                  style: GoogleFonts.blackOpsOne(
-                      fontSize: 30, color: Colors.black),
-                ),
+                label: Text("Cancel",
+                    style: TextStyle(
+                      fontFamily: "Super Boys",
+                      color: Colors.black,
+                      fontSize: 30,
+                    )),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.yellow[300],
                   shape: RoundedRectangleBorder(

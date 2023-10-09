@@ -80,13 +80,17 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
     for (int i = 0; i < text.length; i++) {
       blankText.add(const Text(
         '_',
-        style: TextStyle(fontSize: 20),
+        style: TextStyle(
+            fontSize: 30,
+            fontFamily: "Super Boys",
+            color: Colors.black,
+            fontWeight: FontWeight.bold),
       ));
     }
   }
 
   void connect() {
-    widget.socket = IO.io('http://10.10.18.194:3000/', <String, dynamic>{
+    widget.socket = IO.io('http://10.10.18.152:3000/', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false
     });
@@ -313,7 +317,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                       children: [
                         Positioned.fill(
                           child: Image.asset(
-                            'assets/bg-pattern.jpg',
+                            'assets/bg.png',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -353,16 +357,29 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                                   });
                                 },
                                 child: SizedBox.expand(
-                                  child: ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(20)),
-                                      child: RepaintBoundary(
-                                        child: CustomPaint(
-                                          size: Size.infinite,
-                                          painter: MyCustomPainter(
-                                              pointsList: points),
-                                        ),
-                                      )),
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                      left: 20.0,
+                                      right: 20.0,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(24),
+                                      border: Border.all(
+                                        color: Colors.black, // Warna border
+                                        width: 2.0, // Lebar border dalam pixel
+                                      ),
+                                    ),
+                                    child: ClipRRect(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(20)),
+                                        child: RepaintBoundary(
+                                          child: CustomPaint(
+                                            size: Size.infinite,
+                                            painter: MyCustomPainter(
+                                                pointsList: points),
+                                          ),
+                                        )),
+                                  ),
                                 ),
                               ),
                             ),
@@ -375,14 +392,91 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                                             MainAxisAlignment.spaceEvenly,
                                         children: blankText,
                                       ),
-                                      Text(
-                                          '${dataOfRoom['turn']['nickname']} is drawing')
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Stack(
+                                            children: [
+                                              Text(
+                                                '${dataOfRoom['turn']['nickname']} ',
+                                                style: TextStyle(
+                                                  fontFamily: 'Super Boys',
+                                                  fontSize: 30.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  foreground: Paint()
+                                                    ..style =
+                                                        PaintingStyle.stroke
+                                                    ..strokeWidth = 6
+                                                    ..color = Colors.black,
+                                                ),
+                                              ),
+                                              Text(
+                                                '${dataOfRoom['turn']['nickname']} ',
+                                                style: TextStyle(
+                                                  fontFamily: 'Super Boys',
+                                                  fontSize: 30.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color(0xFF75CFFF),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Stack(
+                                            children: [
+                                              Text(
+                                                'is drawing',
+                                                style: TextStyle(
+                                                  fontFamily: 'Super Boys',
+                                                  fontSize: 30.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  foreground: Paint()
+                                                    ..style =
+                                                        PaintingStyle.stroke
+                                                    ..strokeWidth = 6
+                                                    ..color = Colors.black,
+                                                ),
+                                              ),
+                                              Text(
+                                                'is drawing',
+                                                style: TextStyle(
+                                                  fontFamily: 'Super Boys',
+                                                  fontSize: 30.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color(0xFFFFBF00),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   )
                                 : Center(
-                                    child: Text(
-                                      dataOfRoom['word'],
-                                      style: const TextStyle(fontSize: 30),
+                                    child: Stack(
+                                      children: [
+                                        Text(
+                                          '${dataOfRoom['word']}',
+                                          style: TextStyle(
+                                            fontFamily: 'Super Boys',
+                                            fontSize: 30.0,
+                                            fontWeight: FontWeight.bold,
+                                            foreground: Paint()
+                                              ..style = PaintingStyle.stroke
+                                              ..strokeWidth = 6
+                                              ..color = Colors.black,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${dataOfRoom['word']}',
+                                          style: TextStyle(
+                                            fontFamily: 'Super Boys',
+                                            fontSize: 30.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xFFFFBF00),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                             Row(
@@ -435,33 +529,40 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                                     itemBuilder: (context, index) {
                                       var msg = messages[index].values;
                                       print(msg);
-                                      return Card(
-                                        shape: const RoundedRectangleBorder(
-                                          side: BorderSide(width: 2),
+                                      return Container(
+                                        margin: const EdgeInsets.only(
+                                          left: 20.0,
+                                          right: 20.0,
                                         ),
-                                        child: ListTile(
-                                            title: Text(
-                                              msg.elementAt(0),
-                                              style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 19,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            subtitle: msg
-                                                    .elementAt(1)
-                                                    .contains('Guessed it!')
-                                                ? Text(
-                                                    msg.elementAt(1),
-                                                    style: const TextStyle(
-                                                        color: Colors.green,
-                                                        fontSize: 16),
-                                                  )
-                                                : Text(
-                                                    '${msg.elementAt(1)} ❌',
-                                                    style: const TextStyle(
-                                                        color: Colors.red,
-                                                        fontSize: 16),
-                                                  )),
+                                        child: Card(
+                                          shape: const RoundedRectangleBorder(
+                                            side: BorderSide(width: 2),
+                                          ),
+                                          child: ListTile(
+                                              title: Text(
+                                                msg.elementAt(0),
+                                                style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 19,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              subtitle: msg
+                                                      .elementAt(1)
+                                                      .contains('Guessed it!')
+                                                  ? Text(
+                                                      msg.elementAt(1),
+                                                      style: const TextStyle(
+                                                          color: Colors.green,
+                                                          fontSize: 16),
+                                                    )
+                                                  : Text(
+                                                      '${msg.elementAt(1)} ❌',
+                                                      style: const TextStyle(
+                                                          color: Colors.red,
+                                                          fontSize: 16),
+                                                    )),
+                                        ),
                                       );
                                     })),
                           ],

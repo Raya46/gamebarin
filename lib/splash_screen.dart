@@ -18,12 +18,9 @@ class SplashScreen extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/bg-pattern.jpg',
+              'assets/bg.png',
               fit: BoxFit.cover,
             ),
-          ),
-          Container(
-            color: Colors.blue.withOpacity(0.5),
           ),
           Center(
             child: Row(
