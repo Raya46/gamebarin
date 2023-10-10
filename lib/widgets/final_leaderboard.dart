@@ -1,4 +1,8 @@
+import 'dart:math';
+
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:gamebarin/widgets/text_outlined.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FinalLeaderboard extends StatefulWidget {
@@ -16,6 +20,15 @@ class FinalLeaderboard extends StatefulWidget {
 }
 
 class _FinalLeaderboardState extends State<FinalLeaderboard> {
+  late ConfettiController _confettiController;
+  @override
+  void initState() {
+    super.initState();
+    _confettiController =
+        ConfettiController(duration: const Duration(milliseconds: 800));
+    _confettiController.play();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
@@ -37,28 +50,65 @@ class _FinalLeaderboardState extends State<FinalLeaderboard> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.2,
               ),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.2,
-                        height: MediaQuery.of(context).size.height * 0.2,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.yellow,
-                          child: Image.asset('assets/gold-medal.png'),
+              Container(
+                margin: const EdgeInsets.only(
+                  left: 80.0,
+                  right: 80.0,
+                ),
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.yellow,
+                            child: Image.asset('assets/gold-medal.png'),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.02,
-                      ),
-                      Text(
-                        "${widget.winner} is the winner",
-                        style: GoogleFonts.blackOpsOne(fontSize: 20),
-                      ),
-                    ],
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextOutlined(
+                                primary: widget.winner,
+                                secondary: widget.winner,
+                                sizeFont: 40.0,
+                                textColor: Color(0xFF75CFFF)),
+                            TextOutlined(
+                                primary: ' is winner',
+                                secondary: ' is winner',
+                                sizeFont: 40.0,
+                                textColor: Color(0xFFFFBF00)),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: ConfettiWidget(
+                  confettiController: _confettiController,
+                  blastDirection: -pi / 4,
+                  emissionFrequency: 0.2,
+                  numberOfParticles: 10,
+                  blastDirectionality: BlastDirectionality.explosive,
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: ConfettiWidget(
+                  confettiController: _confettiController,
+                  blastDirection: -pi / 4,
+                  emissionFrequency: 0.2,
+                  numberOfParticles: 10,
+                  blastDirectionality: BlastDirectionality.explosive,
                 ),
               ),
               const SizedBox(

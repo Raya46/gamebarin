@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamebarin/games/game_playing_page.dart';
+import 'package:gamebarin/widgets/text_outlined.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -81,56 +82,16 @@ class _CreateRoomPageState extends State<CreateRoomPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Stack(
-                    children: [
-                      Text(
-                        'Create ',
-                        style: TextStyle(
-                          fontFamily: 'Super Boys',
-                          fontSize: 40.0,
-                          fontWeight: FontWeight.bold,
-                          foreground: Paint()
-                            ..style = PaintingStyle.stroke
-                            ..strokeWidth = 6
-                            ..color = Colors.black,
-                        ),
-                      ),
-                      Text(
-                        'Create ',
-                        style: TextStyle(
-                          fontFamily: 'Super Boys',
-                          fontSize: 40.0,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF75CFFF),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Stack(
-                    children: [
-                      Text(
-                        'Room',
-                        style: TextStyle(
-                          fontFamily: 'Super Boys',
-                          fontSize: 40.0,
-                          fontWeight: FontWeight.bold,
-                          foreground: Paint()
-                            ..style = PaintingStyle.stroke
-                            ..strokeWidth = 6
-                            ..color = Colors.black,
-                        ),
-                      ),
-                      Text(
-                        'Room',
-                        style: TextStyle(
-                          fontFamily: 'Super Boys',
-                          fontSize: 40.0,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFFFBF00),
-                        ),
-                      ),
-                    ],
-                  ),
+                  TextOutlined(
+                      primary: 'Create ',
+                      secondary: 'Create ',
+                      sizeFont: 40.0,
+                      textColor: Color(0xFF75CFFF)),
+                  TextOutlined(
+                      primary: 'Room',
+                      secondary: 'Room',
+                      sizeFont: 40.0,
+                      textColor: Color(0xFFFFBF00)),
                 ],
               ),
               SizedBox(

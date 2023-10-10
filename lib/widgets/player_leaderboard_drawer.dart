@@ -32,7 +32,6 @@ class _PlayerDrawerState extends State<PlayerDrawer> {
             TextButton(
               child: const Text('Report'),
               onPressed: () {
-                widget._timer.cancel();
                 widget.socket.emit('change-turn', widget.dataOfRoom['name']);
               },
             ),

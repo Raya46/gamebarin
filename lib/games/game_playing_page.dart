@@ -10,6 +10,7 @@ import 'package:gamebarin/models/touch_points.dart';
 import 'package:gamebarin/pages/home_page.dart';
 import 'package:gamebarin/widgets/final_leaderboard.dart';
 import 'package:gamebarin/widgets/player_leaderboard_drawer.dart';
+import 'package:gamebarin/widgets/text_outlined.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class GamePlayingPage extends StatefulWidget {
@@ -90,7 +91,7 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
   }
 
   void connect() {
-    widget.socket = IO.io('http://10.10.18.152:3000/', <String, dynamic>{
+    widget.socket = IO.io('http://10.10.18.33:3000/', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false
     });
@@ -396,58 +397,18 @@ class _GamePlayingPageState extends State<GamePlayingPage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Stack(
-                                            children: [
-                                              Text(
-                                                '${dataOfRoom['turn']['nickname']} ',
-                                                style: TextStyle(
-                                                  fontFamily: 'Super Boys',
-                                                  fontSize: 30.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  foreground: Paint()
-                                                    ..style =
-                                                        PaintingStyle.stroke
-                                                    ..strokeWidth = 6
-                                                    ..color = Colors.black,
-                                                ),
-                                              ),
-                                              Text(
-                                                '${dataOfRoom['turn']['nickname']} ',
-                                                style: TextStyle(
-                                                  fontFamily: 'Super Boys',
-                                                  fontSize: 30.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Color(0xFF75CFFF),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Stack(
-                                            children: [
-                                              Text(
-                                                'is drawing',
-                                                style: TextStyle(
-                                                  fontFamily: 'Super Boys',
-                                                  fontSize: 30.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  foreground: Paint()
-                                                    ..style =
-                                                        PaintingStyle.stroke
-                                                    ..strokeWidth = 6
-                                                    ..color = Colors.black,
-                                                ),
-                                              ),
-                                              Text(
-                                                'is drawing',
-                                                style: TextStyle(
-                                                  fontFamily: 'Super Boys',
-                                                  fontSize: 30.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Color(0xFFFFBF00),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                          TextOutlined(
+                                              primary:
+                                                  '${dataOfRoom['turn']['nickname']}',
+                                              secondary:
+                                                  '${dataOfRoom['turn']['nickname']}',
+                                              sizeFont: 30.0,
+                                              textColor: Color(0xFF75CFFF)),
+                                          TextOutlined(
+                                              primary: 'is drawing',
+                                              secondary: 'is drawing',
+                                              sizeFont: 30.0,
+                                              textColor: Color(0xFFFFBF00)),
                                         ],
                                       ),
                                     ],

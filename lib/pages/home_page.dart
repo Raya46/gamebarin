@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamebarin/pages/create_room_page.dart';
 import 'package:gamebarin/pages/join_room_page.dart';
+import 'package:gamebarin/widgets/text_outlined.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatelessWidget {
@@ -27,60 +28,18 @@ class HomePage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Stack(
-                      children: [
-                        Text(
-                          'Game',
-                          style: TextStyle(
-                            fontFamily: 'Super Boys',
-                            fontSize: 40.0,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 4.0,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 6
-                              ..color = Colors.black,
-                          ),
-                        ),
-                        Text(
-                          'Game',
-                          style: TextStyle(
-                            fontFamily: 'Super Boys',
-                            letterSpacing: 4.0,
-                            fontSize: 40.0,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF75CFFF),
-                          ),
-                        ),
-                      ],
+                    TextOutlined(
+                      primary: 'GAME',
+                      secondary: 'GAME',
+                      sizeFont: 40.0,
+                      textColor: Color(0xFF75CFFF),
                     ),
-                    Stack(
-                      children: [
-                        Text(
-                          'Barin',
-                          style: TextStyle(
-                            letterSpacing: 4.0,
-                            fontFamily: 'Super Boys',
-                            fontSize: 40.0,
-                            fontWeight: FontWeight.bold,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 6
-                              ..color = Colors.black,
-                          ),
-                        ),
-                        Text(
-                          'Barin',
-                          style: TextStyle(
-                            letterSpacing: 4.0,
-                            fontFamily: 'Super Boys',
-                            fontSize: 40.0,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFFFFBF00),
-                          ),
-                        ),
-                      ],
-                    ),
+                    TextOutlined(
+                      primary: 'BARIN',
+                      secondary: 'BARIN',
+                      sizeFont: 40.0,
+                      textColor: Color(0xFFFFBF00),
+                    )
                   ],
                 ),
                 Text(

@@ -29,13 +29,59 @@ class SplashScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
-                  Icons.draw,
-                  size: 46.0,
+                Stack(
+                  children: [
+                    Text(
+                      'Game',
+                      style: TextStyle(
+                        fontFamily: 'Super Boys',
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 4.0,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 6
+                          ..color = Colors.black,
+                      ),
+                    ),
+                    Text(
+                      'Game',
+                      style: TextStyle(
+                        fontFamily: 'Super Boys',
+                        letterSpacing: 4.0,
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF75CFFF),
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  "Gamebarin",
-                  style: GoogleFonts.blackOpsOne(fontSize: 40),
+                Stack(
+                  children: [
+                    Text(
+                      'Barin',
+                      style: TextStyle(
+                        letterSpacing: 4.0,
+                        fontFamily: 'Super Boys',
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.bold,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 6
+                          ..color = Colors.black,
+                      ),
+                    ),
+                    Text(
+                      'Barin',
+                      style: TextStyle(
+                        letterSpacing: 4.0,
+                        fontFamily: 'Super Boys',
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFFFFBF00),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

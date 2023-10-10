@@ -32,7 +32,7 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
   }
 
   connect() {
-    _socket = IO.io('http://10.10.18.152:3000/', <String, dynamic>{
+    _socket = IO.io('http://10.10.18.33:3000/', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false
     });
@@ -118,7 +118,7 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
                         'Room',
                         style: TextStyle(
                           fontFamily: 'Super Boys',
-                          fontSize: 40.0,
+                          fontSize: 25.0,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 4.0,
                           foreground: Paint()
@@ -132,7 +132,7 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
                         style: TextStyle(
                           fontFamily: 'Super Boys',
                           letterSpacing: 4.0,
-                          fontSize: 40.0,
+                          fontSize: 25.0,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF75CFFF),
                         ),
@@ -146,7 +146,7 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
                         style: TextStyle(
                           letterSpacing: 4.0,
                           fontFamily: 'Super Boys',
-                          fontSize: 40.0,
+                          fontSize: 25.0,
                           fontWeight: FontWeight.bold,
                           foreground: Paint()
                             ..style = PaintingStyle.stroke
@@ -159,7 +159,7 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
                         style: TextStyle(
                           letterSpacing: 4.0,
                           fontFamily: 'Super Boys',
-                          fontSize: 40.0,
+                          fontSize: 25.0,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFFFFBF00),
                         ),
