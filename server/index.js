@@ -10,7 +10,6 @@ var io = require("socket.io")(server)
 
 app.use(express.json())
 
-const DB = 'mongodb+srv://muhammadrayaarrizki:rayarizki090106@cluster0.iys0j8y.mongodb.net/?retryWrites=true&w=majority'
 
 mongoose.connect(DB).then(() => {
     console.log("connection successful");

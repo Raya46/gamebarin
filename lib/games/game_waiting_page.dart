@@ -32,7 +32,7 @@ class _GameWaitingScreenState extends State<GameWaitingScreen> {
   }
 
   connect() {
-    _socket = IO.io('http://10.10.18.33:3000/', <String, dynamic>{
+    _socket = IO.io('http://192.168.1.11:3000/', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false
     });
